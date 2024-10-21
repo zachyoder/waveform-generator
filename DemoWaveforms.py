@@ -10,7 +10,7 @@ def outputHeartbeat(ch1, sample_rate, max_voltage, voltage_lub, dc_offset):
     f0 = 1 # [Hz]
     fraction_lub = 0.25 # fraction of cycle for lub part
     fraction_down = 0.25 # fraction of cycle in between dub and lub
-    fraction_dub = 0.5 # fraction of cycle for dub part
+    fraction_dub = 0.25 # fraction of cycle for dub part
 
     samples_per_cycle = int(sample_rate/f0)
     lub_samples = int(samples_per_cycle*fraction_lub)
@@ -23,7 +23,7 @@ def outputHeartbeat(ch1, sample_rate, max_voltage, voltage_lub, dc_offset):
     down = dc_offset*((1/2)*xs + (1/2))
     xs = np.sin(np.linspace(0, 2*pi, dub_samples) - pi/2)
     dub = (max_voltage - dc_offset)*((1/2)*xs + (1/2)) + dc_offset
-    output_waveform = np.concatenate((lub, dub, down))
+    output_waveform = np.concatenate((lub, down, dub, down))
 
     #plt.plot(output_waveform)
     #plt.show()
